@@ -2,7 +2,7 @@
   "name": "Wild Spider",
   "short_name": "demo web crawler that's still in experimenting",
   "description": "web pages are crawled by being loaded into browser using multiple tabs parallelly",
-  "version": "0.0.1",
+  "version": "0.0.2",
 
   "browser_action": {
     "default_icon": "icon.png"
