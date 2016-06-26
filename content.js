@@ -202,18 +202,26 @@ function 提取文本(htmlContent) {
   return 文本.join(' ');
 }
 
+function fastGetLinks() {
+  var aElements = document.getElementsByTagName('a');
+  var links = [];
+  for(var i=0;i<aElements.length;i++){
+    links.push({title:aElements[i].text, url:aElements[i].href});
+  }
+  return links;
+}
+
 chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
-  console.log(msg);
-  var t = new Date();
+  //var t = new Date();
   
   var htmlContent = document.documentElement.innerHTML;
-  console.log((new Date() - t) + " ms" + ' get inner html');
-  t = new Date();
+  //console.log((new Date() - t) + " ms" + ' get inner html');
+  //t = new Date();
   
-  var linksOnPage = getAllLinksOnPage(htmlContent);
+  var linksOnPage = getAllLinksOnPage(htmlContent);//fastGetLinks();
   // document.getElementsByTagName('a') would save a bit time, but doesn't improve page/sec much
-  console.log((new Date() - t) + " ms" + ' get alllinks');
-  t = new Date();
+  //console.log((new Date() - t) + " ms" + ' get alllinks');
+  //t = new Date();
   
   chrome.runtime.sendMessage({
     links: linksOnPage,
@@ -227,5 +235,5 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
       }
   });
   
-  console.log((new Date() - t) + " ms" + " End of extracting tab: " + msg.tabId + " with " + linksOnPage.length + " urls on page");
+  //console.log((new Date() - t) + " ms" + " End of extracting tab: " + msg.tabId + " with " + linksOnPage.length + " urls on page");
 });

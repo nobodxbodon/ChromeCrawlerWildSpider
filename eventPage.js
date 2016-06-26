@@ -1,6 +1,6 @@
 
 // 允许使用多tab并行crawl, 类似thread pool
-var 最多url数 = 100;
+var 最多url数 = 10;
 var tab总数 = 3;
 
 var 待访问链接 = [];
@@ -132,10 +132,12 @@ chrome.runtime.onMessage.addListener(function (request, _, sendResponse) {
   var 提取链接 = request.links;
   var tabId = request.tabId;
   var 提取内容 = request.extraction;
-
-  //db.places.add(提取内容);
+  //console.log(提取内容)
+  db.places.add(提取内容);
   
-  console.log((new Date() - 当前时间)/1000 + " sec" + " to crawl " + 已访问链接.length + ' pages');// 待访问链接数:' + 待访问链接.length);//提取内容.title + ' url:' + 提取内容.url + ' 长度: ' + 提取内容.content.length);
+  if (已访问链接.length % 10 === 0) {
+    console.log((new Date() - 当前时间)/1000 + " sec" + " to crawl " + 已访问链接.length + ' pages');// 待访问链接数:' + 待访问链接.length);//提取内容.title + ' url:' + 提取内容.url + ' 长度: ' + 提取内容.content.length);
+  }
   
   载入链接(提取链接, tabId);
 });
